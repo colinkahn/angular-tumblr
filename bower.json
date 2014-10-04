@@ -1,0 +1,11 @@
+{
+  "name": "ng-tumblr",
+  "version": "0.0.0",
+  "license": "MIT",
+  "dependencies": {
+    "angular": "~1.2.25",
+    "closure-compiler": "http://dl.google.com/closure-compiler/compiler-latest.zip",
+    "closure-library": "https://github.com/google/closure-library.git",
+    "angular-mocks": "~1.2.25"
+  }
+}
