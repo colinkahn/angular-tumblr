@@ -1,6 +1,7 @@
 'use strict';
 
 goog.require('tumblr.post.model.base');
+goog.require('tumblr.post.model.builder.base');
 
 describe('PostBaseModel', function () {
   var PostBaseModel;
@@ -13,18 +14,7 @@ describe('PostBaseModel', function () {
     var model;
 
     beforeEach(function () {
-      model = new PostBaseModel(
-        4742980381,
-        'w0w13z0w13',
-        'http://w0w13z0w13.tumblr.com/post/4742980381',
-        'quote',
-        '2011-04-19 08:52:34 GMT',
-        1303203154,
-        'html',
-        'KLA85e6c',
-        [],
-        23
-      );
+      model = new PostBaseModel.Builder().build();
     });
 
     it('has an id', function () {
@@ -40,7 +30,7 @@ describe('PostBaseModel', function () {
     });
 
     it('has a type', function () {
-      expect(model.type).toBe('quote');
+      expect(model.type).toBe('text');
     });
 
     it('has a date', function () {
@@ -60,7 +50,11 @@ describe('PostBaseModel', function () {
     });
 
     it('has tags', function () {
-      expect(model.tags).toEqual([]);
+      expect(model.tags).toEqual([
+        'foo',
+        'bar',
+        'baz'
+      ]);
     });
 
     it('has a note count', function () {
@@ -68,18 +62,7 @@ describe('PostBaseModel', function () {
     });
 
     it('can convert to json', function () {
-      expect(model.toJSON()).toEqual({
-        id: 4742980381,
-        blog_name: 'w0w13z0w13',
-        post_url: 'http://w0w13z0w13.tumblr.com/post/4742980381',
-        type: 'quote',
-        date: '2011-04-19 08:52:34 GMT',
-        timestamp: 1303203154,
-        format: 'html',
-        reblog_key: 'KLA85e6c',
-        tags: [],
-        note_count: 23
-      });
+      expect(model.toJSON()).toEqual(PostBaseModel.Builder.defaults);
     });
   });
 });

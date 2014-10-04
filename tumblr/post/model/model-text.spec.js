@@ -2,6 +2,7 @@
 
 goog.require('tumblr.post.model.text');
 goog.require('tumblr.post.model.base');
+goog.require('tumblr.post.model.builder.text');
 
 describe('PostTextModel', function () {
   var PostTextModel;
@@ -11,7 +12,7 @@ describe('PostTextModel', function () {
   });
 
   it('is a subclass of the base model', function () {
-    var model = new PostTextModel();
+    var model = new PostTextModel.Builder().build();
     expect(model instanceof tumblr.post.model.base).toBe(true);
   });
 
@@ -19,20 +20,7 @@ describe('PostTextModel', function () {
     var model;
 
     beforeEach(function () {
-      model = new PostTextModel(
-        4742980381,
-        'w0w13z0w13',
-        'http://w0w13z0w13.tumblr.com/post/4742980381',
-        'text',
-        '2011-04-19 08:52:34 GMT',
-        1303203154,
-        'html',
-        'KLA85e6c',
-        [],
-        23,
-        'Milky Dog',
-        '<p>Foo!</p>'
-      );
+      model = new PostTextModel.Builder().build();
     });
 
     it('has a title', function () {
@@ -44,20 +32,7 @@ describe('PostTextModel', function () {
     });
 
     it('can convert to json', function () {
-      expect(model.toJSON()).toEqual({
-        id: 4742980381,
-        blog_name: 'w0w13z0w13',
-        post_url: 'http://w0w13z0w13.tumblr.com/post/4742980381',
-        type: 'text',
-        date: '2011-04-19 08:52:34 GMT',
-        timestamp: 1303203154,
-        format: 'html',
-        reblog_key: 'KLA85e6c',
-        tags: [],
-        note_count: 23,
-        title: 'Milky Dog',
-        body: '<p>Foo!</p>'
-      });
+      expect(model.toJSON()).toEqual(PostTextModel.Builder.defaults);
     });
   });
 
