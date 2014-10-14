@@ -38,7 +38,9 @@ ApiService.prototype.getBlogFollowers = function (params) {
 };
 
 ApiService.prototype.getBlogPosts = function (params) {
-  return this.get(this.url('posts'), params, true);
+  return this.get(this.url('posts'), params).then(function (result) {
+    return result.data.response.posts;
+  });
 };
 
 ApiService.prototype.getBlogLikes = function (params) {

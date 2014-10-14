@@ -14,3 +14,13 @@
   - followers
     - repo
     - model
+
+-> blog
+    - dao
+    - repository
+    - model
+
+-> post
+    - dao
+    - repository
+    - model

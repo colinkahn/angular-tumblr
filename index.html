@@ -10,5 +10,12 @@
   </head>
   <body>
     <div tumblr-greeting=""></div>
+    <div ng-controller="PostListController as postListCtrl" ng-init="postListCtrl.setup()">
+      <ul>
+        <li ng-repeat="post in postListCtrl.posts">
+          {{post.id}}
+        </li>
+      </ul>
+    </div>
   </body>
 </html>
