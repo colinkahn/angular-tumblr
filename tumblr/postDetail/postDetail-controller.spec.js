@@ -1,17 +1,17 @@
 'use strict';
 
 goog.require('tumblr.api.module');
-goog.require('tumblr.postList.module');
+goog.require('tumblr.postDetail.module');
 goog.require('tumblr.post.model.builder.base');
 goog.require('tumblr.mock.dao');
 
-describe('postList', function () {
+describe('postRepository', function () {
   var controller;
   var postDAO;
   var postRepository;
   var $rootScope;
 
-  beforeEach(angular.mock.module('tumblr.postList.module'));
+  beforeEach(angular.mock.module('tumblr.postDetail.module'));
   beforeEach(angular.mock.module('tumblr.api.module'));
 
   beforeEach(angular.mock.module(function ($provide) {
@@ -24,7 +24,7 @@ describe('postList', function () {
     PostBaseModel  = $injector.get('PostBaseModel');
     $rootScope     = $injector.get('$rootScope');
 
-    controller = $controller('PostListController');
+    controller = $controller('PostDetailController');
   }));
 
   beforeEach(function () {
@@ -34,29 +34,15 @@ describe('postList', function () {
           .withType('quote')
           .build()
           .toJSON(),
-      new PostBaseModel.Builder()
-          .withId('bar')
-          .withType('text')
-          .build()
-          .toJSON()
     ]);
   });
 
-  it('gets all posts', function () {
+  it('gets post', function () {
     $rootScope.$apply(function () {
-      controller.setup();
+      controller.updatePostId('foo');
     });
 
-    expect(controller.posts).toEqual([
-      jasmine.any(PostBaseModel),
-      jasmine.any(PostBaseModel)
-    ]);
-  });
-
-  it('adds a post to the url', function () {
-    spyOn(controller.$location, 'search');
-    controller.showDetail('foo');
-    expect(controller.$location.search).toHaveBeenCalledWith('detail', 'foo');
+    expect(controller.post).toEqual(jasmine.any(PostBaseModel));
   });
 
 });

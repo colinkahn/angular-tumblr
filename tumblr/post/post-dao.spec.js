@@ -45,7 +45,13 @@ describe('postDAO', function () {
           .toJSON()
     ];
 
-    spyOn(tumblrApi, 'getBlogPosts').andReturn($q.when(posts));
+    spyOn(tumblrApi, 'get').andReturn($q.when({
+      data: {
+        response: {
+          posts: posts
+        }
+      }
+    }));
   });
 
   describe('retrieve posts', function () {
@@ -69,7 +75,15 @@ describe('postDAO', function () {
     it('returns the post', function () {
       var data;
 
-      tumblrApi.getBlogPosts.andReturn($q.when(posts[0]));
+      tumblrApi.get.andReturn($q.when({
+        data: {
+          response: {
+            posts: [
+              posts[0]
+            ]
+          }
+        }
+      }));
 
       $rootScope.$apply(function () {
         postDAO.retrieve('foo').then(function (result) {
@@ -77,9 +91,11 @@ describe('postDAO', function () {
         });
       });
 
-      expect(tumblrApi.getBlogPosts).toHaveBeenCalledWith({
-        id: 'foo'
-      });
+      expect(tumblrApi.get).toHaveBeenCalledWith(
+        'http://api.tumblr.com/v2/blog/w0w13z0w13/posts',
+        {id: 'foo'},
+        postDAO.cache
+      );
       expect(data).toBe(posts[0]);
     });
   });

@@ -1,12 +1,14 @@
 goog.provide('tumblr.module');
 goog.require('tumblr.post.module');
 goog.require('tumblr.postList.module');
+goog.require('tumblr.postDetail.module');
 
 tumblr.module = angular.module(
 'tumblr', 
   [
     'tumblr.post.module', 
-    'tumblr.postList.module'
+    'tumblr.postList.module',
+    'tumblr.postDetail.module'
 ]);
 
 goog.require('tumblr.greeting');

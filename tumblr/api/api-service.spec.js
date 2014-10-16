@@ -42,45 +42,4 @@ describe('tumblrApi', function () {
     var url = 'http://api.tumblr.com/v2/blog/' + tumblrApi.blogName + '/info';
     expect(tumblrApi.url('info')).toBe(url);
   });
-
-  describe('resources', function () {
-    beforeEach(function () {
-      spyOn(tumblrApi, 'get');
-    });
-
-    it('gets blog info', function () {
-      var url = 'http://api.tumblr.com/v2/blog/w0w13z0w13/info',
-          params = {};
-      tumblrApi.getBlogInfo(params);
-      expect(tumblrApi.get).toHaveBeenCalledWith(url, params, true);
-    });
-
-    it('gets the blog avatar', function () {
-      var url = 'http://api.tumblr.com/v2/blog/w0w13z0w13/avatar/32',
-          params = {};
-      tumblrApi.getBlogAvatar(32, params);
-      expect(tumblrApi.get).toHaveBeenCalledWith(url, params, true);
-    });
-
-    it('gets blog followers', function () {
-      var url = 'http://api.tumblr.com/v2/blog/w0w13z0w13/followers',
-          params = {};
-      tumblrApi.getBlogFollowers(params);
-      expect(tumblrApi.get).toHaveBeenCalledWith(url, params, true);
-    });
-
-    it('gets blog posts', function () {
-      var url = 'http://api.tumblr.com/v2/blog/w0w13z0w13/posts',
-          params = {};
-      tumblrApi.getBlogPosts(params);
-      expect(tumblrApi.get).toHaveBeenCalledWith(url, params, true);
-    });
-
-    it('gets blog likes', function () {
-      var url = 'http://api.tumblr.com/v2/blog/w0w13z0w13/likes',
-          params = {};
-      tumblrApi.getBlogLikes(params);
-      expect(tumblrApi.get).toHaveBeenCalledWith(url, params, true);
-    });
-  });
 });

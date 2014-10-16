@@ -7,16 +7,20 @@ function ApiService ($http, blogName, key) {
   this.root = 'http://api.tumblr.com/v2/blog/' + this.blogName + '/';
 }
 
-ApiService.prototype.get = function (path, params, withoutApiKey) {
+ApiService.prototype.get = function (path, params, cache, withoutApiKey) {
   params = params || {};
+
   if (!withoutApiKey) {
     params.api_key = this.key;
   }
+
   params.callback = 'JSON_CALLBACK';
+
   return this.$http({
     url: path,
     method: 'JSONP',
-    params: params
+    params: params,
+    cache: cache
   });
 };
 
@@ -25,6 +29,7 @@ ApiService.prototype.url = function () {
   return this.root + parts.join('/');
 };
 
+/*
 ApiService.prototype.getBlogInfo = function (params) {
   return this.get(this.url('info'), params, true);
 };
@@ -46,5 +51,6 @@ ApiService.prototype.getBlogPosts = function (params) {
 ApiService.prototype.getBlogLikes = function (params) {
   return this.get(this.url('likes'), params, true);
 };
+*/
 
 tumblr.api.service = ApiService;
