@@ -42,7 +42,7 @@ describe('postList', function () {
     ]);
   });
 
-  it('gets all posts', function () {
+  xit('gets all posts', function () {
     $rootScope.$apply(function () {
       controller.setup();
     });
@@ -59,4 +59,56 @@ describe('postList', function () {
     expect(controller.$location.search).toHaveBeenCalledWith('detail', 'foo');
   });
 
+  describe('page number', function () {
+    beforeEach(function () {
+      spyOn(controller, 'updatePostsForPage');
+      controller.updatePageNumber('1');
+    });
+
+    it('updates', function () {
+      expect(controller.pageNumber).toBe('1');
+    });
+
+    it('finds the posts for the page', function () {
+      expect(controller.updatePostsForPage).toHaveBeenCalled();
+    });
+  });
+
+  describe('finding by page number', function () {
+    beforeEach(function () {
+      spyOn(postRepository, 'findByPageNumber').andCallThrough();
+      controller.pageNumber = '2';
+
+      $rootScope.$apply(function () {
+        controller.updatePostsForPage();
+      });
+    });
+
+    it('calls the right method on the repository', function () {
+      expect(postRepository.findByPageNumber).toHaveBeenCalledWith(
+        controller.pageNumber
+      );
+    });
+
+    it('returns the posts', function () {
+      expect(controller.posts).toEqual([
+        jasmine.any(PostBaseModel),
+        jasmine.any(PostBaseModel)
+      ]);
+    });
+  });
+
+  it('gets the next page of posts', function () {
+    spyOn(controller.$location, 'search');
+    controller.pageNumber = '1';
+    controller.nextPage();
+    expect(controller.$location.search).toHaveBeenCalledWith('p', '2');
+  });
+
+  it('gets the previous page of posts', function () {
+    spyOn(controller.$location, 'search');
+    controller.pageNumber = '2';
+    controller.prevPage();
+    expect(controller.$location.search).toHaveBeenCalledWith('p', '1');
+  });
 });

@@ -12,7 +12,7 @@ MockDAO.prototype.persist = function (data) {
 MockDAO.prototype.retrieve = function (id) {
   var item;
 
-  if (!id) {
+  if (!id || angular.isObject(id)) {
     return this.$q.when(this.data);
   } else {
     angular.forEach(this.data, function (data) {

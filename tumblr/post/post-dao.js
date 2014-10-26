@@ -8,10 +8,14 @@ function PostDAO ($q, $cacheFactory, tumblrApi) {
 
 PostDAO.prototype.retrieve = function (id) {
   var url = this.api.url('posts');
+  var single = false;
   var params = {};
 
-  if (id) {
+  if (angular.isObject(id)) {
+    angular.extend(params, id);
+  } else if (id) {
     params.id = id;
+    single = true;
   }
 
   return this.api.get(url, params, this.cache).then(function (result) {
@@ -23,7 +27,7 @@ PostDAO.prototype.retrieve = function (id) {
       posts = [];
     }
 
-    return id ? posts[0] : posts;
+    return single ? posts[0] : posts;
   });
 };
 

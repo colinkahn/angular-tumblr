@@ -5,3 +5,6 @@ tumblr.postList.module = angular.module('tumblr.postList.module', ['tumblr.post.
 
 goog.require('tumblr.postList.controller');
 tumblr.postList.module.controller('PostListController', tumblr.postList.controller);
+
+goog.require('tumblr.postList.directive');
+tumblr.postList.module.directive('postList', tumblr.postList.directive);

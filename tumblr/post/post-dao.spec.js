@@ -99,4 +99,27 @@ describe('postDAO', function () {
       expect(data).toBe(posts[0]);
     });
   });
+
+  describe('using params object', function () {
+    var data;
+
+    beforeEach(function () {
+      $rootScope.$apply(function () {
+        postDAO.retrieve({
+          offset: 10,
+          limit: 10
+        }).then(function (result) {
+          data = result;
+        });
+      });
+    });
+
+    it('calls the correct url', function () {
+      expect(tumblrApi.get).toHaveBeenCalledWith(
+        'http://api.tumblr.com/v2/blog/w0w13z0w13/posts',
+        {offset: 10, limit: 10},
+        postDAO.cache
+      );
+    });
+  });
 });

@@ -73,4 +73,30 @@ describe('postRepository', function () {
     });
   });
 
+  describe('finding by page number', function () {
+    var posts;
+
+    beforeEach(function () {
+      spyOn(postDAO, 'retrieve').andCallThrough();
+
+      $rootScope.$apply(function () {
+        postRepository.findByPageNumber('2').then(function (result) {
+          posts = result;
+        });
+      });
+    });
+
+    it('calls retrieve with offset and limit', function () {
+      expect(postDAO.retrieve).toHaveBeenCalledWith({
+        offset: 2 * postRepository.limit,
+        limit: postRepository.limit
+      });
+    });
+
+    it('returns posts', function () {
+      expect(posts[0]).toEqual(jasmine.any(PostQuoteModel));
+      expect(posts[1]).toEqual(jasmine.any(PostTextModel));
+    });
+  });
+
 });
